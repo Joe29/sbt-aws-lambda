@@ -1,7 +1,7 @@
 package com.gilt.aws.lambda
 
 import com.amazonaws.services.lambda.model.{FunctionCode, UpdateFunctionCodeRequest, VpcConfig}
-import collection.JavaConverters._
+import collection.JavaConversions._
 import sbt._
 
 import scala.util.{Failure, Success}
@@ -122,8 +122,8 @@ object AwsLambdaPlugin extends AutoPlugin {
     val resolvedVpcConfig = {
       if (resolvedVpcConfigSubnetIds.isDefined || resolvedVpcConfigSecurityGroupIds.isDefined){
         val config = new VpcConfig()
-        if (resolvedVpcConfigSubnetIds.isDefined) config.setSubnetIds(resolvedVpcConfigSubnetIds.get.value.split(",").to)
-        if (resolvedVpcConfigSecurityGroupIds.isDefined) config.setSecurityGroupIds(resolvedVpcConfigSecurityGroupIds.get.value.split(",").to)
+        if (resolvedVpcConfigSubnetIds.isDefined) config.setSubnetIds(resolvedVpcConfigSubnetIds.get.value.split(",").toSeq)
+        if (resolvedVpcConfigSecurityGroupIds.isDefined) config.setSecurityGroupIds(resolvedVpcConfigSecurityGroupIds.get.value.split(",").toSeq)
         Some(config)
       } else {
         None
